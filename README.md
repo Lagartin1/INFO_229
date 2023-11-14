@@ -1,9 +1,7 @@
 # INFO_229_Equipo00
 
+# Integrantes
 Francisco Labrin
 Felipe cordova
-Sebastian montesinos
+Sebastian montecinos
 
-
-proyecto: Buscaminas en python
-Desplige en docker

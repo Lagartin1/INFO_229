@@ -1,4 +1,7 @@
 import random
+import os
+import time
+
 
 class Casilla:
     def __init__(self, es_mina=False):
@@ -7,13 +10,12 @@ class Casilla:
 ## Patron de diseño singleton para protejer el tablero de dos instancias en un mismo game
 class Tablero:
     _instance = None
-   
     def __new__(cls):
         if not cls._instance :
             nivel=""
             while True:
                 try: 
-                    selecccion = (input('Nivel principiante(p)  intermedio(m)  experto(e)\n Ingrese caracter: '))
+                    selecccion = (input('Nivel principiante(p)  intermedio(m)  experto(e)\nIngrese caracter: '))
                     if selecccion == "p" or selecccion == "m" or selecccion == "e":
                         nivel +=selecccion
                         break
@@ -85,21 +87,22 @@ class Tablero:
 
     def jugar(self):
         while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
             self.mostrar_tablero()
-            fila=0
-            columna =0  
-            valid = True          
+            fila = 0
+            columna = 0
+            valid = True
             while valid:
-
-                try: 
+                try:
                     fila = int(input('Fila: '))
                     columna = int(input('Columna: '))
                     valid = False
-                except (ValueError):
-                    print("Error Valor no valido, Ingrese nuevamente")
+                except ValueError:
+                    print("Error: Valor no válido. Ingrese nuevamente.")
+                    time.sleep(3)
                 except TypeError:
-                    print("Error Valor no valido, Ingrese nuevamente")
-                             
+                    print("Error: Valor no válido. Ingrese nuevamente.")
+                    time.sleep(3)
             if 0 <= fila < self.filas and 0 <= columna < self.columnas:
                 if self.tablero[fila][columna].es_mina:
                     print('¡Perdiste!')
@@ -113,8 +116,11 @@ class Tablero:
                     break
             else:
                 print('Coordenadas inválidas. Inténtalo de nuevo.')
+                time.sleep(3)
+
 
 
 if __name__ == '__main__':
+    print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
     tablero = Tablero()
     tablero.jugar()
