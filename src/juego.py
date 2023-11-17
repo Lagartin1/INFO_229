@@ -37,7 +37,7 @@ class Tablero:
             cls._instance.colocar_minas()
             return cls._instance
 
-    def colocar_minas(self):
+    def colocar_minas(self) -> None:
         minas_colocadas = 0
         while minas_colocadas < self.num_minas:
             fila = random.randint(0, self.filas - 1)
@@ -46,7 +46,7 @@ class Tablero:
                 self.tablero[fila][columna].es_mina = True
                 minas_colocadas += 1
 
-    def mostrar_tablero(self, mostrar_minas=False):
+    def mostrar_tablero(self, mostrar_minas=False) -> None:
         for fila in range(self.filas):
             for columna in range(self.columnas):
                 casilla = self.tablero[fila][columna]
@@ -62,7 +62,7 @@ class Tablero:
                     print('X |', end=' ')
             print()
 
-    def revelar_casilla(self, fila, columna):
+    def revelar_casilla(self, fila, columna) -> None:
         casilla = self.tablero[fila][columna]
         if casilla.revelada:
             return
@@ -76,7 +76,7 @@ class Tablero:
                     if 0 <= f < self.filas and 0 <= c < self.columnas:
                         self.revelar_casilla(f, c)
 
-    def contar_minas_vecinas(self, fila, columna):
+    def contar_minas_vecinas(self, fila, columna) -> int:
         minas_vecinas = 0
         for f in range(fila - 1, fila + 2):
             for c in range(columna - 1, columna + 2):
@@ -85,7 +85,7 @@ class Tablero:
                         minas_vecinas += 1
         return minas_vecinas
 
-    def jugar(self):
+    def jugar(self) -> None:
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             self.mostrar_tablero()
