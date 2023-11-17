@@ -86,6 +86,7 @@ class Tablero:
         return minas_vecinas
 
     def jugar(self) -> None:
+        timepoInicio = time.time()
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
             self.mostrar_tablero()
@@ -105,18 +106,23 @@ class Tablero:
                     time.sleep(3)
             if 0 <= fila < self.filas and 0 <= columna < self.columnas:
                 if self.tablero[fila][columna].es_mina:
-                    print('¡Perdiste!')
+                    print('¡Perdiste!\n')
                     self.mostrar_tablero(mostrar_minas=True)
+                    tiempoTranscurrido = (int) (time.time() - timepoInicio)
+                    print(f"\nTiempo de partida: {tiempoTranscurrido} segundos ")
                     break
+                
                 self.revelar_casilla(fila, columna)
                 casillas_no_minadas = sum(1 for fila in self.tablero for casilla in fila if not casilla.es_mina and casilla.revelada)
                 if casillas_no_minadas == (self.filas * self.columnas - self.num_minas):
-                    print('¡Ganaste!')
+                    print('¡Ganaste! \n')
                     self.mostrar_tablero(mostrar_minas=True)
+                    tiempoTranscurrido =(int)(  time.time()-timepoInicio )
+                    print(f"\nTiempo de partida: {tiempoTranscurrido} segundos ")
                     break
             else:
                 print('Coordenadas inválidas. Inténtalo de nuevo.')
-                time.sleep(3)
+                time.sleep(2)
 
 
 
