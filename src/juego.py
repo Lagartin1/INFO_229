@@ -7,10 +7,13 @@ class Casilla:
     def __init__(self, es_mina=False):
         self.es_mina = es_mina
         self.revelada = False
+        
+        
+        
 ## Patron de diseño singleton para protejer el tablero de dos instancias en un mismo game
 class Tablero:
     _instance = None
-    def __new__(cls):
+    def __new__(cls):  #constructor que setea el tamño del tablero y cuantas minas hay 
         if not cls._instance :
             nivel=""
             while True:
@@ -31,12 +34,14 @@ class Tablero:
             else:
                 f,c,m=16,30,100
             cls._instance=super(Tablero, cls).__new__(cls)
-            cls._instance.filas,cls._instance.columnas,cls._instance.num_minas =f,c,m
+            cls._instance.filas,cls._instance.columnas,cls._instance.num_minas =f,c,m 
             
             cls._instance.tablero = [[Casilla() for _ in range(c)] for _ in range(f)]
             cls._instance.colocar_minas()
             return cls._instance
-
+        """
+            Inserta minas en pociones random del tablero
+        """
     def colocar_minas(self) -> None:
         minas_colocadas = 0
         while minas_colocadas < self.num_minas:
@@ -45,7 +50,9 @@ class Tablero:
             if not self.tablero[fila][columna].es_mina:
                 self.tablero[fila][columna].es_mina = True
                 minas_colocadas += 1
-
+        """
+            Muestra el tablero y dependiendo el parametro _mostrar_minas_ revela las minas
+        """
     def mostrar_tablero(self, mostrar_minas=False) -> None:
         for fila in range(self.filas):
             for columna in range(self.columnas):
@@ -61,7 +68,9 @@ class Tablero:
                 else:
                     print('X |', end=' ')
             print()
-
+    """"
+        desisde si gasta donde revalar casillas
+    """
     def revelar_casilla(self, fila, columna) -> None:
         casilla = self.tablero[fila][columna]
         if casilla.revelada:
@@ -75,7 +84,9 @@ class Tablero:
                 for c in range(columna - 1, columna + 2):
                     if 0 <= f < self.filas and 0 <= c < self.columnas:
                         self.revelar_casilla(f, c)
-
+    """"
+        Cuenta las minas vecinas a las casilla
+    """
     def contar_minas_vecinas(self, fila, columna) -> int:
         minas_vecinas = 0
         for f in range(fila - 1, fila + 2):
@@ -84,7 +95,10 @@ class Tablero:
                     if self.tablero[f][c].es_mina:
                         minas_vecinas += 1
         return minas_vecinas
-
+    
+        """
+            Inicia la partida       
+        """
     def jugar(self) -> None:
         timepoInicio = time.time()
         while True:
@@ -100,10 +114,10 @@ class Tablero:
                     valid = False
                 except ValueError:
                     print("Error: Valor no válido. Ingrese nuevamente.")
-                    time.sleep(3)
+                    time.sleep(2)
                 except TypeError:
                     print("Error: Valor no válido. Ingrese nuevamente.")
-                    time.sleep(3)
+                    time.sleep(2)
             if 0 <= fila < self.filas and 0 <= columna < self.columnas:
                 if self.tablero[fila][columna].es_mina:
                     print('¡Perdiste!\n')
@@ -128,5 +142,5 @@ class Tablero:
 
 if __name__ == '__main__':
     print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
-    tablero = Tablero()
-    tablero.jugar()
+    tablero = Tablero()  #instacia tablero singleton
+    tablero.jugar() # incia parrida
