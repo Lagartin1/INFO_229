@@ -9,18 +9,17 @@ class Casilla:
         self.revelada = False
         
         
-        
 ## Patron de diseño singleton para protejer el tablero de dos instancias en un mismo game
 class Tablero:
     _instance = None
     def __new__(cls):  #constructor que setea el tamño del tablero y cuantas minas hay 
         if not cls._instance :
-            nivel=""
+            nivel = ""
             while True:
                 try: 
-                    selecccion = (input('Nivel principiante(p)  intermedio(m)  experto(e)\nIngrese caracter: '))
+                    selecccion = (input("Nivel principiante(p)  intermedio(m)  experto(e)\nIngrese caracter: "))
                     if selecccion == "p" or selecccion == "m" or selecccion == "e":
-                        nivel +=selecccion
+                        nivel += selecccion
                         break
                     EOFError
                 except (ValueError):
@@ -28,13 +27,13 @@ class Tablero:
                 except TypeError:
                     print("Error Valor no valido, Ingrese nuevamente")
             if nivel == "p":
-                f,c,m=8,8,10
+                f,c,m = 8,8,10
             elif nivel == "m":
-                f,c,m=16,16,41
+                f,c,m = 16,16,41
             else:
-                f,c,m=16,30,100
+                f,c,m = 16,30,100
             cls._instance=super(Tablero, cls).__new__(cls)
-            cls._instance.filas,cls._instance.columnas,cls._instance.num_minas =f,c,m 
+            cls._instance.filas,cls._instance.columnas,cls._instance.num_minas = f,c,m 
             
             cls._instance.tablero = [[Casilla() for _ in range(c)] for _ in range(f)]
             cls._instance.colocar_minas()
@@ -59,14 +58,14 @@ class Tablero:
                 casilla = self.tablero[fila][columna]
                 if casilla.revelada or mostrar_minas:
                     if casilla.es_mina:
-                        print('* |', end=' ')
+                        print("* |", end=" ")
                     else:
                         if self.contar_minas_vecinas(fila,columna) != 0 :
-                            print(f"{self.contar_minas_vecinas(fila,columna)} |", end=' ')
+                            print(f"{self.contar_minas_vecinas(fila,columna)} |", end=" ")
                         else:
                             print("- |",end=" ")
                 else:
-                    print('X |', end=' ')
+                    print("X |", end=" ")
             print()
     """"
         desisde si gasta donde revalar casillas
@@ -96,21 +95,21 @@ class Tablero:
                         minas_vecinas += 1
         return minas_vecinas
     
-        """
-            Inicia la partida       
-        """
+    """
+        Inicia la partida       
+    """
     def jugar(self) -> None:
         timepoInicio = time.time()
         while True:
-            os.system('cls' if os.name == 'nt' else 'clear')
+            os.system("cls" if os.name == "nt" else "clear")
             self.mostrar_tablero()
             fila = 0
             columna = 0
             valid = True
             while valid:
                 try:
-                    fila = int(input('Fila: '))
-                    columna = int(input('Columna: '))
+                    fila = int(input("Fila: "))
+                    columna = int(input("Columna: "))
                     valid = False
                 except ValueError:
                     print("Error: Valor no válido. Ingrese nuevamente.")
@@ -120,7 +119,7 @@ class Tablero:
                     time.sleep(2)
             if 0 <= fila < self.filas and 0 <= columna < self.columnas:
                 if self.tablero[fila][columna].es_mina:
-                    print('¡Perdiste!\n')
+                    print("¡Perdiste!\n")
                     self.mostrar_tablero(mostrar_minas=True)
                     tiempoTranscurrido = (int) (time.time() - timepoInicio)
                     print(f"\nTiempo de partida: {tiempoTranscurrido} segundos ")
@@ -129,18 +128,18 @@ class Tablero:
                 self.revelar_casilla(fila, columna)
                 casillas_no_minadas = sum(1 for fila in self.tablero for casilla in fila if not casilla.es_mina and casilla.revelada)
                 if casillas_no_minadas == (self.filas * self.columnas - self.num_minas):
-                    print('¡Ganaste! \n')
+                    print("¡Ganaste! \n")
                     self.mostrar_tablero(mostrar_minas=True)
                     tiempoTranscurrido =(int)(  time.time()-timepoInicio )
                     print(f"\nTiempo de partida: {tiempoTranscurrido} segundos ")
                     break
             else:
-                print('Coordenadas inválidas. Inténtalo de nuevo.')
+                print("Coordenadas inválidas. Inténtalo de nuevo.")
                 time.sleep(2)
 
 
 
-if __name__ == '__main__':
-    print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
-    tablero = Tablero()  #instacia tablero singleton
-    tablero.jugar() # incia parrida
+
+print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
+tablero = Tablero()  #instacia tablero singleton
+tablero.jugar() # incia parrida
