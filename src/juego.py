@@ -139,7 +139,10 @@ class Tablero:
 
 
 
+def main() -> None:
+    print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
+    tablero = Tablero()  #instacia tablero singleton
+    tablero.jugar() # incia parrida
 
-print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
-tablero = Tablero()  #instacia tablero singleton
-tablero.jugar() # incia parrida
+if __name__ == "__main__":
+    main()
