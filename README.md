@@ -1,7 +1,7 @@
 # INFO_229_Equipo00
 
-# Integrantes
+# Integrantes  
 Francisco Labrin  
-Felipe cordova  
-Sebastian montecinos  
+Felipe Córdova  
+Sebastián Montecinos  
 
