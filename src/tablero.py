@@ -1,14 +1,8 @@
 import random
 import os
 import time
+from casilla import Casilla
 
-
-class Casilla:
-    def __init__(self, es_mina=False):
-        self.es_mina = es_mina
-        self.revelada = False
-        
-        
 ## Patron de diseño singleton para protejer el tablero de dos instancias en un mismo game
 class Tablero:
     _instance = None
@@ -137,12 +131,3 @@ class Tablero:
                 print("Coordenadas inválidas. Inténtalo de nuevo.")
                 time.sleep(2)
 
-
-
-def main() -> None:
-    print("\nBienvenido al Juego de Buscaminas de INFO229!!\n")
-    tablero = Tablero()  #instacia tablero singleton
-    tablero.jugar() # incia parrida
-
-if __name__ == "__main__":
-    main()
